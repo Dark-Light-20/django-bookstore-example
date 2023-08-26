@@ -37,6 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    # Third-party
+    # CrispyForms
+    "crispy_forms",  # new
+    "crispy_bootstrap5",  # new
+    "allauth",  
+    "allauth.account",  
+    'allauth.socialaccount',# new
+    'allauth.socialaccount.providers.google',# new
     # Local
     "accounts.apps.AccountsConfig",  # new
     'pages.apps.PagesConfig' # new
@@ -137,3 +146,33 @@ AUTH_USER_MODEL = "accounts.CustomUser"  # new
 LOGIN_REDIRECT_URL = 'home'
 
 LOGOUT_REDIRECT_URL = 'home'
+
+# django-crispy-forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # new
+CRISPY_TEMPLATE_PACK = "bootstrap5"  # new
+
+# django-allauth config
+LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT = "home"  # new
+SITE_ID = 1  
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend", 
+    "allauth.account.auth_backends.AuthenticationBackend",  
+)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
+
+ACCOUNT_SESSION_REMEMBER = True # new 
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False # new 
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
